@@ -1,0 +1,43 @@
+<div class="wrapper">
+	<div class="chat-box">
+		<div class="chat-box-header">
+			<h3>Sbotti</h3>
+			<p>The virtual receptionist</p>
+			<button type="button" (click)="clearChat()">
+				<img src="assets/images/refresh-icon.svg" />
+			</button>
+		</div>
+		<div class="chat-box-main">
+			<ng-container *ngFor="let message of messages">
+				<div
+					class="chat-message"
+					[class.chat-message-received]="message.type === 'received'"
+					[@fadeIn]
+					[class.chat-message-sent]="message.type === 'sent'"
+				>
+					<div>
+						<chat-avatar
+							*ngIf="message.type === 'received'"
+							[image]="message.from.avatar"
+							class="chat-message-from-avatar"
+						></chat-avatar>
+						<div class="chat-message-text">
+							{{ message.text }}
+						</div>
+					</div>
+					<div class="chat-message-date">
+						{{ message.date | date: "short" }}
+					</div>
+				</div>
+			</ng-container>
+		</div>
+		<div class="chat-box-footer">
+			<chat-input
+				(send)="sendMessage($event)"
+				(dismiss)="toggleChat()"
+				[focus]="focus"
+			></chat-input>
+		</div>
+	</div>
+</div>
+<!-- todo animations-->
